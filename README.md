@@ -1,2 +1,1 @@
-IOT Projects
-Some Simple Projects 
+Some Simple IOT Projects 
