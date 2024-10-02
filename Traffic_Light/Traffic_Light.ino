@@ -10,9 +10,9 @@
 #define Green   14  
 
 /* Fill-in information from Blynk Device Info here */
-#define BLYNK_TEMPLATE_ID "TMPL2gzHRUKGX"
-#define BLYNK_TEMPLATE_NAME "Traffic Light"
-#define BLYNK_AUTH_TOKEN "yY38KaGrSR-VrfJKm8BYpuB7A_qzGcmM"
+#define BLYNK_TEMPLATE_ID ""
+#define BLYNK_TEMPLATE_NAME ""
+#define BLYNK_AUTH_TOKEN ""
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
