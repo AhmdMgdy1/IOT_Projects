@@ -1,4 +1,4 @@
-#define distance_to_tank_bottom   9   // distance from sensor to zero% level
+//#define distance_to_tank_bottom   9   // distance from sensor to zero% level
 #define max_distance    5              // distance from sensor to 100% level
  
 #define trigPin  12
