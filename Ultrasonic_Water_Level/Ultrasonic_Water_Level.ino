@@ -1,28 +1,46 @@
-#define distance_to_tank_bottom   9   // distance from sensor to zero% level
-#define max_distance    5              // distance from sensor to 100% level
+/*************************************************************
+  Author  : Ahmed Magdy
+  Date    : 10/3/2024
+  MCU     : ESP32
+  @brief  : Make a Water-level sensor that sense the level of
+  the water and show it on a virural guage and give yor an 
+  alert if the water level is too low.......................
+ *************************************************************/
  
+//Define Pins
+//important parameters used to detecting the distance between 
+//the Ultrasonic-sensor and the water level
+#define distance_to_tank_bottom   9   // distance from sensor to zero% level
+#define max_distance    		  5   // distance from sensor to 100% level
+
+// Pins for Ultrasonic-sensor
 #define trigPin  12
 #define echoPin  13
- 
+
+// Pins for Alert system and light indication
 #define buzzer         14
 #define red_led        27
 #define green_led1     26
 #define green_led2     25
 #define green_led3     33
 #define green_led4     32
- 
+
+//formula to get the depth of the tank
 int tank_depth= distance_to_tank_bottom-max_distance;
-/////////////// ultrasonic sensor variables 
+
+// Ultrasonic-sensor variables 
 long duration=0;
 int distance=0;
 int sensor_reading=0;
 int water_level=0;
- 
+
+//flag variable to send the alert notification to the owner device
 int is_notification_sent=0;
 
  
  
 //---------------------------- Blynk definitions
+//Go to https://blynk.io/ "Make your template and get your device info" 
 /* Fill-in information from Blynk Device Info here */
 #define BLYNK_TEMPLATE_ID "TMPL2QkJmcFJv"
 #define BLYNK_TEMPLATE_NAME "level"
@@ -30,15 +48,16 @@ int is_notification_sent=0;
  
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
- 
+
+//Libraries 
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <BlynkSimpleEsp32.h>
  
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "WE_3E9C92";
-char pass[] = "7560ffaf";
+char networK_name[] = ""; // Set Your Network Name Here as a String
+char network_pass[] = ""; // Set Your Network Password Here as a String
 BlynkTimer timer;
  
 // This function sends Arduino's up time every second to Virtual Pin (5).
@@ -62,7 +81,6 @@ void myTimerEvent()
  Serial.println(water_level); 
  if(water_level>=0 && water_level<20 )
  { 
- //Blynk.virtualWrite(V1,1);
  digitalWrite(buzzer,HIGH);delay(100);digitalWrite(buzzer,LOW);delay(30);
  digitalWrite(red_led,HIGH);
  digitalWrite(green_led1,LOW);
@@ -122,16 +140,15 @@ void setup() {
  
 //---------------------------- Blynk initialization
 Serial.begin(115200);
-Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+Blynk.begin(BLYNK_AUTH_TOKEN, networK_name, network_pass);
 // Setup a function to be called every second
 timer.setInterval(1000L, myTimerEvent);
 //---------------------------- End of Blynk initialization
  
-  
+ //Set Direction of the pins
  pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
  pinMode(echoPin, INPUT); // Sets the echoPin as an Input
- 
-  
+
  pinMode(buzzer,OUTPUT);
  pinMode(red_led,OUTPUT);
  pinMode(green_led1,OUTPUT);
@@ -139,6 +156,7 @@ timer.setInterval(1000L, myTimerEvent);
  pinMode(green_led3,OUTPUT);
  pinMode(green_led4,OUTPUT);
 
+//Intialize the pins by LOGIC_LOW
  digitalWrite(buzzer,LOW);
  digitalWrite(red_led,LOW);
  digitalWrite(green_led1,LOW);
@@ -159,7 +177,7 @@ if ( ! Blynk.connected() )
     // try connect again
     Serial.println("-Try to connect");
     delay(100);
-   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+   Blynk.begin(BLYNK_AUTH_TOKEN, networK_name, network_pass);
    }
  
     Serial.println("-Connected.. ^_^ ");
@@ -167,7 +185,6 @@ if ( ! Blynk.connected() )
  }
 //---------------------------- End of Blynk Loop
 }
- 
 int read_ultrasonic_sensor()
 {
   digitalWrite(trigPin, LOW);

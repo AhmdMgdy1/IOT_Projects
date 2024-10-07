@@ -1,7 +1,9 @@
 /*************************************************************
-  Title   : How To Read Values From Virtual Pins
   Author  : Ahmed Magdy
-  Data    : 10/2/2024
+  Date    : 10/2/2024
+  MCU     : ESP32
+  @brief  : How to control Virtual Pins to make simple Traffic
+  -light Control system by the power of IOT technology........
  *************************************************************/
 
 /* Define Pins */
@@ -9,7 +11,9 @@
 #define Yellow  12
 #define Green   14  
 
+//---------------------------- Blynk definitions
 /* Fill-in information from Blynk Device Info here */
+//Go to https://blynk.io/ "Make your template and get your device info" 
 #define BLYNK_TEMPLATE_ID ""
 #define BLYNK_TEMPLATE_NAME ""
 #define BLYNK_AUTH_TOKEN ""
@@ -32,8 +36,8 @@ char network_pass[] = ""; // Set Your Network Password Here as a String
 //RED
 BLYNK_WRITE(V1)
 {
-  int redValue = param.asInt(); // assigning incoming value from pin V1 to a variable
-  digitalWrite(Red,redValue);
+ // assigning incoming value from pin V1 to a variable
+  digitalWrite(Red, param.asInt());
 }
 
 
@@ -42,8 +46,8 @@ BLYNK_WRITE(V1)
 //YELLOW
 BLYNK_WRITE(V2)
 {
-  int yellowValue = param.asInt(); // assigning incoming value from pin V2 to a variable
-  digitalWrite(Yellow,yellowValue);
+  // assigning incoming value from pin V2 to a variable
+  digitalWrite(Yellow,param.asInt());
 }
 
 // This function will be called every time Slider Widget
@@ -51,8 +55,8 @@ BLYNK_WRITE(V2)
 //GREEN
 BLYNK_WRITE(V3)
 {
-  int greenValue = param.asInt(); // assigning incoming value from pin V3 to a variable
-  digitalWrite(Green,greenValue);
+ // assigning incoming value from pin V3 to a variable
+  digitalWrite(Green,param.asInt());
 }
 
 void setup()
